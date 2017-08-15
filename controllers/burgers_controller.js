@@ -28,7 +28,6 @@ router.post("/api/burgers", function(req, res){
 			db.Customer.create({
 				name: req.body.chef_name
 			}).then(function(result){
-				console.log("the result is " + result.id);
 				db.Burger.create({
 					burger_name: req.body.burger_name,
 					CustomerId: result.id
@@ -36,6 +35,15 @@ router.post("/api/burgers", function(req, res){
 					res.redirect("/");
 				});
 			})
+		}
+
+		else {
+			db.Burger.create({
+					burger_name: req.body.burger_name,
+					CustomerId: result[0].id
+				}).then(function(result){
+					res.redirect("/");
+				});
 		}
 	})
 	
